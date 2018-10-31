@@ -12,6 +12,7 @@ jobs:
         type: string
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           environment:
             PROJECT: << parameters.project >>
@@ -32,6 +33,6 @@ workflows:
   Build and Test:
     jobs:
       - test
-      # - build:
+      - build
       #     project: multi-client
       #     project_dir: ./projects/client
