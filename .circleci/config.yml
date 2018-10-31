@@ -3,15 +3,19 @@ jobs:
   build:
     docker:
       - image: circleci/node
+    parameters:
+      name:
+        description: Which project to build docker image for.
+        type: string
+        default: dev
+      dir:
+        description: Which project to build docker image for.
+        type: string
+        default: ./
     steps:
       - checkout
-      parameters:
-        project:
-          description: Which project to build docker image for.
-          type: string
-          default: dev
       - run: |
-          docker build -t blackstockc/<< parameters.name >> ./<< parameters.dir >>
+          docker build -t blackstockc/<< parameters.name >> << parameters.dir >>
   test:
     docker:
       - image: circleci/node
@@ -27,8 +31,6 @@ workflows:
   build_and_test:
     jobs:
       - test
-
-  - docker build -t blackstockc/multi-client ./projects/client
-  - docker build -t blackstockc/multi-nginx ./nginx
-  - docker build -t blackstockc/multi-server ./projects/server
-  - docker build -t blackstockc/multi-worker ./projects/worker
+      - build:
+          name: multi-client
+          dir: ./projects/client
