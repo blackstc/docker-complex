@@ -4,18 +4,19 @@ jobs:
     docker:
       - image: circleci/node
     parameters:
-      name:
-        description: Which project to build docker image for.
+      project:
+        description: What project to build
         type: string
-        default: dev
-      dir:
-        description: Which project to build docker image for.
+      project_dir:
+        description: Project's parent directory
         type: string
-        default: ./
     steps:
       - checkout
-      - run: |
-          docker build -t blackstockc/<< parameters.name >> << parameters.dir >>
+      - run:
+          environment:
+            PROJECT: << parameters.project >>
+            PROJECT_DIR: << parameters.project_dir >>
+          command: docker build -t blackstockc/$PROJECT $PROJECT_DIR
   test:
     docker:
       - image: circleci/node
@@ -32,5 +33,5 @@ workflows:
     jobs:
       - test
       - build:
-          name: multi-client
-          dir: ./projects/client
+          project: multi-client
+          project_dir: ./projects/client
