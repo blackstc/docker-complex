@@ -2,10 +2,16 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/<language>:<version TAG>
+      - image: circleci/node
     steps:
       - checkout
-      - run: <command>
+      parameters:
+        project:
+          description: Which project to build docker image for.
+          type: string
+          default: dev
+      - run: |
+          docker build -t blackstockc/<< parameters.name >> ./<< parameters.dir >>
   test:
     docker:
       - image: circleci/node
@@ -21,3 +27,8 @@ workflows:
   build_and_test:
     jobs:
       - test
+
+  - docker build -t blackstockc/multi-client ./projects/client
+  - docker build -t blackstockc/multi-nginx ./nginx
+  - docker build -t blackstockc/multi-server ./projects/server
+  - docker build -t blackstockc/multi-worker ./projects/worker
