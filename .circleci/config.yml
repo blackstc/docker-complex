@@ -2,26 +2,28 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
 
-executors:
-  node:
-    docker:
-      - image: circleci/node:10
-jobs:
-  test:
-    description: Run tests
-    executor: node
-    steps:
-      - checkout
-      - run: docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
-      - run:
-          name: Run tests
-          command: docker run blackstockc/react-test npm test -- --coverage
-
-workflows:
-  version: 2
-  Build and Deploy:
+orbs:
+  multi:
+    executors:
+      node:
+        docker:
+          - image: circleci/node:10
     jobs:
-      - test:
-          name: test
+      test:
+        description: Run tests
+        executor: node
+        steps:
+          - checkout
+          - run: docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
+          - run:
+              name: Run tests
+              command: docker run blackstockc/react-test npm test -- --coverage
+
+  workflows:
+    version: 2
+    Build and Deploy:
+      jobs:
+        - multi/test:
+            name: test
