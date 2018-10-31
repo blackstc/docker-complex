@@ -1,29 +1,23 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2.1
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/<language>:<version TAG>
+    steps:
+      - checkout
+      - run: <command>
+  test:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: |
+          docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
+          docker run blackstockc/react-test npm test -- --coverage
 
-orbs:
-  multi:
-    executors:
-      node:
-        docker:
-          - image: circleci/node:10
+workflows:
+  version: 2
+  build_and_test:
     jobs:
-      test:
-        description: Run tests
-        executor: node
-        steps:
-          - checkout
-          - run: docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
-          - run:
-              name: Run tests
-              command: docker run blackstockc/react-test npm test -- --coverage
-
-  workflows:
-    version: 2
-    Build and Deploy:
-      jobs:
-        - multi/test:
-            name: test
+      - test
