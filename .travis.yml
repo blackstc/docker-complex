@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - dockre
+
+before_install:
+  - docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
+
+script:
+  - docker run blackstockc/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t blackstockc/multi-client ./projects/client
+  - docker build -t blackstockc/multi-nginx ./nginx
+  - docker build -t blackstockc/multi-server ./projects/server
+  - docker build -t blackstockc/multi-worker ./projects/worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push blackstockc/multi-client
+  - docker push blackstockc/multi-nginx
+  - docker push blackstockc/multi-server
+  - docker push blackstockc/multi-worker
