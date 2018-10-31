@@ -32,6 +32,6 @@ workflows:
   Build and Test:
     jobs:
       - test
-      - build:
-          project: multi-client
-          project_dir: client
+      # - build:
+      #     project: multi-client
+      #     project_dir: ./projects/client
