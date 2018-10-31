@@ -1,11 +1,12 @@
-FROM node:alpine as builder
-WORKDIR '/app'
+FROM mhart/alpine-node AS builder
+WORKDIR /app
 COPY package.json .
-RUN npm i
+RUN yarn install
 COPY . .
-RUN npm run build
+RUN yarn build && yarn --production
 
-FROM nginx
+FROM mhart/alpine-node:base
+WORKDIR /app
+COPY --from=builder /app .
 EXPOSE 3000
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/build /usr/share/nginx/html
+CMD ["node_modules/.bin/next", "start"]
