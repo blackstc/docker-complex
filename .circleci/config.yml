@@ -33,6 +33,6 @@ workflows:
   Build and Test:
     jobs:
       - test
-      - build
-      #     project: multi-client
+      - build:
+          project: multi-client
       #     project_dir: ./projects/client
