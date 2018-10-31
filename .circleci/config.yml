@@ -35,4 +35,4 @@ workflows:
       - test
       - build:
           project: multi-client
-      #     project_dir: ./projects/client
+          project_dir: ./projects/client
