@@ -1,6 +1,6 @@
 sudo: required
 services:
-  - dockre
+  - docker
 
 before_install:
   - docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
