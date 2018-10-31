@@ -29,9 +29,9 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  Build and Test:
     jobs:
       - test
       - build:
-          project: multi-client
-          project_dir: client
+          project: 'multi-client'
+          project_dir: 'client'
