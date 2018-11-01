@@ -27,6 +27,19 @@ jobs:
       - run: |
           docker build -t blackstockc/react-test -f ./projects/client/Dockerfile.dev ./projects/client
           docker run blackstockc/react-test npm test -- --coverage
+  deploy:
+    docker:
+      - image: circleci/node
+    steps:
+      - run:
+          name: Install Now CLI
+          command: sudo npm install --global --unsafe-perm now
+      - deploy:
+          name: Deploy & Alias
+          command: |
+            cd ./projects/client 
+            now --token $ZEIT_TOKEN
+            now --token $ZEIT_TOKEN alias
 
 workflows:
   version: 2
@@ -48,3 +61,7 @@ workflows:
           name: Build Nginx
           project: multi-nginx
           project_dir: ./nginx
+  Deploy:
+    jobs:
+      - deploy:
+          name: Deploy Client
