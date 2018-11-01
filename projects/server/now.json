@@ -4,6 +4,10 @@
     "cloud": "v2"
   },
   "env": {
-    "PGURI": "@pguri"
+    "PGPORT": "@pgport",
+    "PGPASSWORD": "@pgpassword",
+    "PGHOST": "@pghost",
+    "PGUSER": "@pguser",
+    "PGDATABASE": "@pgdatabase"
   }
 }
