@@ -47,11 +47,10 @@ jobs:
           name: Deploy & Alias
           environment:
             PROJECT_DIR: << parameters.project_dir >>
-            ALIAS: << parameters.alias >>
           command: |
             cd $PROJECT_DIR
             now --token $ZEIT_TOKEN --local-config .now/now.staging.json --public
-            now --token $ZEIT_TOKEN alias fib-ui$ALIAS
+            now --token $ZEIT_TOKEN alias fib-ui<< parameters.alias >>
 
 workflows:
   version: 2
