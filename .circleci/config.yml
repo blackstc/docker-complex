@@ -51,13 +51,13 @@ jobs:
             cd $PROJECT_DIR
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
                 now --token $ZEIT_TOKEN --local-config .now/now.production.json
-                now --token $ZEIT_TOKEN --local-config .now/now.production.json alias
+                now --token $ZEIT_TOKEN alias
             elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
                 now --token $ZEIT_TOKEN --local-config .now/now.staging.json
-                now --token $ZEIT_TOKEN --local-config .now/now.staging.json alias
+                now --token $ZEIT_TOKEN alias
             else
                 now --token $ZEIT_TOKEN --local-config .now/now.feature.json --public
-                now --token $ZEIT_TOKEN --local-config .now/now.feature.json --public alias fib-ui.${CIRCLE_BRANCH//\//-}
+                now --token $ZEIT_TOKEN --public alias fib-ui.${CIRCLE_BRANCH//\//-}
             fi
 
 workflows:
