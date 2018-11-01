@@ -57,7 +57,7 @@ jobs:
                 now --token $ZEIT_TOKEN alias
             else
                 now --token $ZEIT_TOKEN --local-config .now/now.feature.json --public
-                now --token $ZEIT_TOKEN alias fib-ui.${CIRCLE_BRANCH}
+                now --token $ZEIT_TOKEN alias fib-ui.${CIRCLE_BRANCH//\//-}
             fi
 
 workflows:
