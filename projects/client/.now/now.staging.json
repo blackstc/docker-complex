@@ -1,0 +1,7 @@
+{
+  "type": "docker",
+  "alias": ["fib-ui.staging"],
+  "features": {
+    "cloud": "v2"
+  }
+}
