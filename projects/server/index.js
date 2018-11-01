@@ -19,14 +19,14 @@ pgClient
   .query('CREATE TABLE IF NOT EXISTS values (number INT)')
   .catch(err => console.log(err))
 
-const redis = require('redis')
-const redisClient = redis.createClient({
-  host: keys.redisHost,
-  port: keys.redisPort,
-  retry_strategy: () => 1000
-})
+// const redis = require('redis')
+// const redisClient = redis.createClient({
+//   host: keys.redisHost,
+//   port: keys.redisPort,
+//   retry_strategy: () => 1000
+// })
 
-const redisPublisher = redisClient.duplicate()
+// const redisPublisher = redisClient.duplicate()
 
 app.get('/', (req, res) => {
   res.send('hi')
@@ -50,8 +50,8 @@ app.post('/values', async (req, res) => {
     return res.status(422).send('Index too high')
   }
 
-  redisClient.hset('values', index, 'Nothing yet!')
-  redisPublisher.publish('insert', index)
+  // redisClient.hset('values', index, 'Nothing yet!')
+  // redisPublisher.publish('insert', index)
   pgClient.query('INSERT INTO values(number) VALUES($1)', [index])
 
   res.send({ working: true })
