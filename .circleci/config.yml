@@ -78,6 +78,7 @@ workflows:
           name: Deploy Client
           project_dir: ./projects/client
           filters:
-            ignore:
-              - master
-              - develop
+            branches:
+              ignore:
+                - master
+                - develop
