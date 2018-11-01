@@ -44,24 +44,24 @@ jobs:
 
 workflows:
   version: 2
-  Build and Test:
-    jobs:
-      - build:
-          name: Build Client
-          project: multi-client
-          project_dir: ./projects/client
-      - build:
-          name: Build Server
-          project: multi-server
-          project_dir: ./projects/server
-      - build:
-          name: Build Worker
-          project: multi-worker
-          project_dir: ./projects/worker
-      - build:
-          name: Build Nginx
-          project: multi-nginx
-          project_dir: ./nginx
+  # Build and Test:
+  #   jobs:
+  #     - build:
+  #         name: Build Client
+  #         project: multi-client
+  #         project_dir: ./projects/client
+  #     - build:
+  #         name: Build Server
+  #         project: multi-server
+  #         project_dir: ./projects/server
+  #     - build:
+  #         name: Build Worker
+  #         project: multi-worker
+  #         project_dir: ./projects/worker
+  #     - build:
+  #         name: Build Nginx
+  #         project: multi-nginx
+  #         project_dir: ./nginx
   Deploy:
     jobs:
       - deploy:
