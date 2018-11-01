@@ -9,6 +9,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 const { Pool } = require('pg')
+console.log(keys)
 const pgClient = new Pool({
   host: keys.pgHost,
   user: keys.pgUser,
@@ -24,7 +25,7 @@ pgClient
   .catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-  res.send('hi')
+  res.send(pgClient)
 })
 
 app.get('/values/all', async (req, res) => {
