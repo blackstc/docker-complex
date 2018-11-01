@@ -1,6 +1,5 @@
 {
   "type": "docker",
-  "alias": ["fib-ui"],
   "features": {
     "cloud": "v2"
   }

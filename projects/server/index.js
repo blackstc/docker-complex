@@ -10,11 +10,7 @@ app.use(bodyParser.json())
 
 const { Pool } = require('pg')
 const pgClient = new Pool({
-  host: keys.pgHost,
-  user: keys.pgUser,
-  database: keys.pgDatabase,
-  port: keys.pgPort,
-  password: keys.pgPassword
+  connectionString: keys.connectionString
 })
 
 pgClient.on('error', () => console.log('Lost PG connection'))

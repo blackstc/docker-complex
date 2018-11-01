@@ -49,34 +49,26 @@ jobs:
             PROJECT_DIR: << parameters.project_dir >>
           command: |
             cd $PROJECT_DIR
-            now --token $ZEIT_TOKEN --local-config .now/now.staging.json --public
-            now --token $ZEIT_TOKEN alias fib-ui<< parameters.alias >>
+            now --token $ZEIT_TOKEN --public
+            now --token $ZEIT_TOKEN alias << parameters.alias >>
 
 workflows:
   version: 2
-  # Build and Test:
-  #   jobs:
-  #     - build:
-  #         name: Build Client
-  #         project: multi-client
-  #         project_dir: ./projects/client
-  #     - build:
-  #         name: Build Server
-  #         project: multi-server
-  #         project_dir: ./projects/server
-  #     - build:
-  #         name: Build Worker
-  #         project: multi-worker
-  #         project_dir: ./projects/worker
-  #     - build:
-  #         name: Build Nginx
-  #         project: multi-nginx
-  #         project_dir: ./nginx
   Deploy:
     jobs:
       - deploy:
           name: Deploy Client
           project_dir: ./projects/client
+          alias: fib-ui-${CIRCLE_BRANCH}
+          filters:
+            branches:
+              ignore:
+                - master
+                - develop
+      - deploy:
+          name: Deploy Server
+          project_dir: ./projects/server
+          alias: fib-api-${CIRCLE_BRANCH}
           filters:
             branches:
               ignore:
