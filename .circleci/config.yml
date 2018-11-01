@@ -30,17 +30,36 @@ jobs:
   deploy:
     docker:
       - image: circleci/node
+    parameters:
+      project:
+        description: Env stage of project
+        type: string
+        default: feature
+      project_dir:
+        description: Project's parent directory
+        type: string
     steps:
       - checkout
       - run:
           name: Install Now CLI
           command: sudo npm install --global --unsafe-perm now
-      - deploy:
+      - run:
           name: Deploy & Alias
+          environment:
+            PROJECT_DIR: << parameters.project_dir >>
           command: |
-            cd ./projects/client 
-            now --token $ZEIT_TOKEN --public
-            now --token $ZEIT_TOKEN alias
+            cd $PROJECT_DIR
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                now --token $ZEIT_TOKEN --local-config .now/now.production.json
+                now --token $ZEIT_TOKEN --local-config .now/now.production.json alias
+            elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+                now --token $ZEIT_TOKEN --local-config .now/now.staging.json
+                now --token $ZEIT_TOKEN --local-config .now/now.staging.json alias
+            else
+                ./.now/now.feature.sh
+                now --token $ZEIT_TOKEN --local-config .now/now.feature.json
+                now --token $ZEIT_TOKEN --local-config .now/now.feature.json alias
+            fi
 
 workflows:
   version: 2
@@ -66,3 +85,4 @@ workflows:
     jobs:
       - deploy:
           name: Deploy Client
+          project_dir: ./projects/client
