@@ -39,7 +39,7 @@ jobs:
           name: Deploy & Alias
           command: |
             cd ./projects/client 
-            now --token $ZEIT_TOKEN
+            now --token $ZEIT_TOKEN --public
             now --token $ZEIT_TOKEN alias
 
 workflows:
