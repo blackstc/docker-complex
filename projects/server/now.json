@@ -1,0 +1,13 @@
+{
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  },
+  "env": {
+    "PGPORT": "@pgport",
+    "PGPASSWORD": "@pgpassword",
+    "PGHOST": "@pghost",
+    "PGUSER": "@pguser",
+    "PGDATABASE": "@pgdatabase"
+  }
+}
